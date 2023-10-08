@@ -17,6 +17,7 @@ const initialRule: AddRuleOptions = {
   feedIDs: [],
   match: '',
   exclude: '',
+  script: '',
   tags: [],
   destination: '',
   startOnLoad: false,
@@ -64,6 +65,7 @@ interface RuleFormData {
   feedID: string;
   label: string;
   match: string;
+  script: string;
   tags: string;
   isBasePath: boolean;
   startOnLoad: boolean;
@@ -140,6 +142,7 @@ const DownloadRulesTab: FC = () => {
             field: formData.field,
             match: formData.match ?? initialRule.match,
             exclude: formData.exclude ?? initialRule.exclude,
+            script: formData.script ?? initialRule.script,
             destination: formData.destination ?? initialRule.destination,
             tags: formData.tags?.split(',') ?? initialRule.tags,
             startOnLoad: formData.startOnLoad ?? initialRule.startOnLoad,

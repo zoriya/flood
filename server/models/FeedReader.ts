@@ -1,4 +1,5 @@
 import FeedSub, {FeedItem} from 'feedsub';
+import Miniget from 'miniget';
 
 export interface FeedReaderOptions {
   feedID: string;
@@ -48,17 +49,20 @@ class FeedReader {
   };
 
   initReader() {
+    // Assign a user agent for rss that require one
+    // FeedSub's requestOpts doesn't work for user agents.
+    Miniget.defaultOptions = Object.assign(Miniget.defaultOptions, {
+      headers: {
+        'User-Agent': 'flood',
+      },
+    });
+    console.log(Miniget.defaultOptions);
     this.reader = new FeedSub(this.options.url, {
       autoStart: true,
       emitOnStart: true,
       maxHistory: this.options.maxHistory,
       interval: this.options.interval,
       forceInterval: true,
-      requestOpts: {
-        headers: {
-          'User-Agent': 'flood',
-        },
-      },
     });
 
     this.reader.on('items', this.handleFeedItems);
